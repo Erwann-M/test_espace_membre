@@ -22,15 +22,11 @@
             ));
             $pass = $req->fetch();
 
-            //! 3) donc j'imagine que ça vient probablement d'ici, mais tout me semble correct...
-            $pass_correct = password_verify($_COOKIE['pass'], $pass['pass']);
-
             if (!$pass) {
                 echo 'Mauvais identifiant ou mot de passe !';
             }
             else {
-                //! 1) l'erreur vient surement d'ici , quand je met : "!$pass_correct" ça marche.
-                if ($pass_correct) {
+                if ($_COOKIE['pass'] == $pass['pass']) {
                     session_start();
                     $_SESSION['id'] = $pass['id'];
                     $_SESSION['pseudo'] = $_COOKIE['pseudo'];
@@ -39,8 +35,6 @@
                 }
                 else {
                     echo 'Mauvais identifiant ou mot de passe !<br>';
-                    //! 2) quand j'affiche tout ce qu'il y as en dessous , les deux passwords sont identiques
-                    //! et le pseudo est bon, mais on entre pas dans la condition if plus haut...
                     echo $pass['pass']. '<br>';
                     echo $_COOKIE['pass']. '<br>';
                     echo $_COOKIE['pseudo'].'<br>';
